@@ -25,6 +25,7 @@ public class ApplicationsController {
 
     @RequestMapping("/applications")
     String applications(HttpServletRequest request, Model model) {
+
         Account account = AccountResolver.INSTANCE.getAccount(request);
         com.stormpath.sdk.application.Application currentApplication = ApplicationResolver.INSTANCE.getApplication(request);
         List<Application> applications = applicationService.getAllApplications(account, currentApplication.getHref());
@@ -32,5 +33,6 @@ public class ApplicationsController {
         model.addAttribute("rolePermissions", permissionService.getRolePermissions(account, applications));
         model.addAttribute("isSysAdmin", permissionService.isSysAdmin(account));
         return "applications";
+
     }
 }
