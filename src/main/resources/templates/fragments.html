@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <body>
+
+        <!-- Footer -->
+        <footer class="footer text-right" th:fragment="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        2016 © Acada Plus
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer -->
+
+        <!-- Header -->
+        <header id="topnav" th:fragment="header (page)">
+            <div class="topbar-main">
+                <div class="container">
+                    <!-- LOGO -->
+                    <div class="topbar-left">
+                        <a href="home.html" th:href="@{/}" class="logo"><span>acada<span>+</span></span></a>
+                    </div>
+                    <!-- End Logo container-->
+                    <div class="menu-extras">
+                        <ul class="nav navbar-nav navbar-right pull-right">
+                            <li class="dropdown user-box">
+                                <a href="" class="dropdown-toggle waves-effect waves-light profile " data-toggle="dropdown" aria-expanded="true">
+                                    <img src="../static/images/users/avatar-1.jpg" th:src="@{/images/users/avatar-1.jpg}" alt="user-img" class="img-circle user-img"/>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
+                                    <li><a href="home.html" th:href="@{/logout}"><i class="ti-power-off m-r-5"></i> Logout</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="menu-item">
+                                    <!-- Mobile menu toggle-->
+                                    <a class="navbar-toggle">
+                                        <div class="lines">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </a>
+                                    <!-- End mobile menu toggle-->
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-custom">
+                <div class="container">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            <li th:attr="class=${page=='home' ? 'active disabled-link' : ''}">
+                                <a href="home.html" th:href="@{/}"><i class="zmdi zmdi-apps"></i> <span> Home </span> </a>
+                            </li>
+                            <li th:attr="class=${page=='applications' ? 'active disabled-link' : ''}" th:if="${isSysAdmin}">
+                                <a href="applications.html" th:href="@{/applications}"><i class="zmdi zmdi-settings"></i> <span> Manage Applications </span> </a>
+                            </li>
+                            <li th:attr="class=${page=='users' ? 'active disabled-link' : ''}" th:if="${isSysAdmin}">
+                                <a href="users.html" th:href="@{/users}"><i class="zmdi zmdi-accounts"></i> <span> Manage Users </span> </a>
+                            </li>
+                            <!--<li th:attr="class=${page=='settings' ? 'active disabled-link' : ''}" th:if="${isSysAdmin}">
+                                <a href="settings.html" th:href="@{/settings}"><i class="zmdi zmdi-settings"></i> <span> Settings </span> </a>
+                            </li>-->
+                        </ul>
+                        <!-- End navigation menu  -->
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End Header -->
+
+    </body>
+
+</html>

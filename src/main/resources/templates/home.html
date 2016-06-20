@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="A fully featured school management platform"/>
+        <meta name="author" content="Acada Plus +"/>
+
+        <link rel="shortcut icon" href="../favicon.ico"/>
+
+        <title>Acada+ School Management Platform</title>
+
+        <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/core.css" th:href="@{/css/core.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/components.css" th:href="@{/css/components.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/icons.css" th:href="@{/css/icons.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/menu.css" th:href="@{/css/menu.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/responsive.css" th:href="@{/css/responsive.css}" rel="stylesheet" type="text/css"/>
+
+        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../static/js/modernizr.min.js" th:src="@{/js/modernizr.min.js}"></script>
+        <script type="application/javascript" th:inline="javascript">
+            var csrfToken = [[${_csrf.token}]];
+        </script>
+
+    </head>
+
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <header id="topnav" th:replace="fragments :: header (page='home')">
+            <div class="topbar-main">
+                <div class="container">
+                    <!-- LOGO -->
+                    <div class="topbar-left">
+                        <a href="home.html" class="logo"><span>acada<span>+</span></span></a>
+                    </div>
+                    <!-- End Logo container-->
+                    <div class="menu-extras">
+                        <ul class="nav navbar-nav navbar-right pull-right">
+                            <li class="dropdown user-box">
+                                <a href="" class="dropdown-toggle waves-effect waves-light profile " data-toggle="dropdown" aria-expanded="true">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465708663/Acada%2B%20Platform/User%20Images/avatar-1.jpg" alt="user-img" class="img-circle user-img"/>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
+                                    <li><a href="home.html"><i class="ti-power-off m-r-5"></i> Logout</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="menu-item">
+                                    <!-- Mobile menu toggle-->
+                                    <a class="navbar-toggle">
+                                        <div class="lines">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </a>
+                                    <!-- End mobile menu toggle-->
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-custom">
+                <div class="container">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            <li class="active">
+                                <a class="active"><i class="zmdi zmdi-apps"></i> <span>My Applications</span></a>
+                            </li>
+                            <li>
+                                <a href="applications.html"><i class="zmdi zmdi-settings"></i> <span>Manage Applications</span></a>
+                            </li>
+                            <li>
+                                <a href="users.html"><i class="zmdi zmdi-accounts"></i> <span>Manage Users</span></a>
+                            </li>
+                        </ul>
+                        <!-- End navigation menu  -->
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End Navigation Bar-->
+
+
+        <div class="wrapper">
+            <div class="container">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12 text-center m-b-30">
+                        <h2 th:inline="text">Welcome To <span th:text="${account.directory.name}">King's College Lagos</span></h2>
+                    </div>
+                </div>
+
+
+                <div class="row m-b-20">
+                    <div class="col-lg-2 col-sm-2"></div>
+                    <div class="col-lg-8 col-sm-8">
+                        <h4><strong><span th:text="${account.givenName}">Ayodeji</span>, please select an application:</strong></h4>
+                    </div>
+                    <div class="col-lg-2 col-sm-2"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-2 col-sm-2"></div>
+                    <div class="col-lg-8 col-sm-8">
+                        <div class="row" th:remove="all-but-first">
+                            <div class="col-lg-3 col-sm-4 text-center" th:each="application : ${applications}">
+                                <a href="#" th:href="${application.url}"  class="unimplemented">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465583001/Acada%2B%20Platform/Application%20Icons/enrollment.png" th:src="${application.icon}" class="img-circle thumb-xl img-thumbnail m-b-10" alt="${application.name}"/>
+                                    <p class="font-13 m-b-30"><span th:text="${application.name}">ENROLLMENT</span></p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-4 text-center">
+                                <a href="#">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465583001/Acada%2B%20Platform/Application%20Icons/attendance.png" class="img-circle thumb-xl img-thumbnail m-b-10" alt="Attendance"/>
+                                    <p class="font-13 m-b-30">ATTENDANCE</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-4 text-center">
+                                <a href="#">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465583001/Acada%2B%20Platform/Application%20Icons/gradebook.png" class="img-circle thumb-xl img-thumbnail m-b-10" alt="Gradebook"/>
+                                    <p class="font-13 m-b-30">GRADEBOOK</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-4 text-center">
+                                <a href="#" class="unimplemented">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465583001/Acada%2B%20Platform/Application%20Icons/behavior.png" class="img-circle thumb-xl img-thumbnail m-b-10" alt="Behaviour"/>
+                                    <p class="font-13 m-b-30">BEHAVIOUR</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-4 text-center">
+                                <a href="#" class="unimplemented">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465583001/Acada%2B%20Platform/Application%20Icons/reportcards.png" class="img-circle thumb-xl img-thumbnail m-b-10" alt="Report Cards"/>
+                                    <p class="font-13 m-b-30">REPORT CARDS</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-4 text-center">
+                                <a href="#">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465583001/Acada%2B%20Platform/Application%20Icons/analytics.png" class="img-circle thumb-xl img-thumbnail m-b-10" alt="Analytics"/>
+                                    <p class="font-13 m-b-30">ANALYTICS</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-4 text-center">
+                                <a href="#">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465583001/Acada%2B%20Platform/Application%20Icons/messages.png" class="img-circle thumb-xl img-thumbnail m-b-10" alt="Messages"/>
+                                    <p class="font-13 m-b-30">MESSAGES</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-sm-4 text-center">
+                                <a href="#" class="unimplemented">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465583001/Acada%2B%20Platform/Application%20Icons/configuration.png" class="img-circle thumb-xl img-thumbnail m-b-10" alt="Configuration"/>
+                                    <p class="font-13 m-b-30">CONFIGURATION</p>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-2"></div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="footer text-right" th:replace="fragments :: footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                2016 © Acada Plus
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End Footer -->
+
+            </div>
+            <!-- end container -->
+
+        </div>
+
+        <!-- jQuery  -->
+        <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+        <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+        <script src="../static/js/detect.js" th:src="@{/js/detect.js}"></script>
+        <script src="../static/js/fastclick.js" th:src="@{/js/fastclick.js}"></script>
+
+        <script src="../static/js/jquery.slimscroll.js" th:src="@{/js/jquery.slimscroll.js}"></script>
+        <script src="../static/js/jquery.blockUI.js" th:src="@{/js/jquery.blockUI.js}"></script>
+        <script src="../static/js/waves.js" th:src="@{/js/waves.js}"></script>
+        <script src="../static/js/wow.min.js" th:src="@{/js/wow.js}"></script>
+        <script src="../static/js/jquery.nicescroll.js" th:src="@{/js/jquery.nicescroll.js}"></script>
+        <script src="../static/js/jquery.scrollTo.min.js" th:src="@{/js/jquery.scrollTo.min.js}"></script>
+
+        <!-- Dashboard init -->
+
+        <!-- App js -->
+        <script src="../static/js/jquery.core.js" th:src="@{/js/jquery.core.js}"></script>
+        <script src="../static/js/jquery.app.js" th:src="@{/js/jquery.app.js}"></script>
+
+        <!-- Page js -->
+        <script src="../static/js/page-home.js" th:src="@{/js/page-home.js}"></script>
+
+    </body>
+</html>
