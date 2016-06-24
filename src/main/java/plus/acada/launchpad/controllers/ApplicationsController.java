@@ -24,7 +24,7 @@ public class ApplicationsController {
     private PermissionService permissionService;
 
     @RequestMapping("/applications")
-    String applications(HttpServletRequest request, Model model) {
+    String loadApplicationsPage(HttpServletRequest request, Model model) {
 
         Account account = AccountResolver.INSTANCE.getAccount(request);
         com.stormpath.sdk.application.Application currentApplication = ApplicationResolver.INSTANCE.getApplication(request);

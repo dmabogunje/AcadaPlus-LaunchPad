@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="A fully featured school management platform"/>
+        <meta name="author" content="Acada Plus +"/>
+
+        <link rel="shortcut icon" href="../favicon.ico"/>
+
+        <title>Acada+ School Management Platform</title>
+
+        <!-- Bootstrap Date Picker -->
+        <link href="../static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" th:href="@{/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css}" rel="stylesheet" type="text/css"/>
+
+        <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/core.css" th:href="@{/css/core.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/components.css" th:href="@{/css/components.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/icons.css" th:href="@{/css/icons.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/menu.css" th:href="@{/css/menu.css}" rel="stylesheet" type="text/css"/>
+        <link href="../static/css/responsive.css" th:href="@{/css/responsive.css}" rel="stylesheet" type="text/css"/>
+
+        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../static/js/modernizr.min.js" th:src="@{/js/modernizr.min.js}"></script>
+        <script type="application/javascript" th:inline="javascript">
+            var csrfToken = [[${_csrf.token}]];
+        </script>
+
+    </head>
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <header id="topnav" th:replace="fragments :: header (page='profile')">
+            <div class="topbar-main">
+                <div class="container">
+                    <!-- LOGO -->
+                    <div class="topbar-left">
+                        <a href="home.html" class="logo"><span>acada<span>+</span></span></a>
+                    </div>
+                    <!-- End Logo container-->
+                    <div class="menu-extras">
+                        <ul class="nav navbar-nav navbar-right pull-right">
+                            <li class="dropdown user-box">
+                                <a href="" class="dropdown-toggle waves-effect waves-light profile " data-toggle="dropdown" aria-expanded="true">
+                                    <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465708663/Acada%2B%20Platform/User%20Images/avatar-1.jpg" alt="user-img" class="img-circle user-img"/>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
+                                    <li><a href="home.html"><i class="ti-power-off m-r-5"></i> Logout</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="menu-item">
+                                    <!-- Mobile menu toggle-->
+                                    <a class="navbar-toggle">
+                                        <div class="lines">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </a>
+                                    <!-- End mobile menu toggle-->
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-custom">
+                <div class="container">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            <li>
+                                <a href="home.html"><i class="zmdi zmdi-apps"></i> <span>My Applications</span></a>
+                            </li>
+                            <li>
+                                <a href="applications.html"><i class="zmdi zmdi-settings"></i> <span>Manage Applications</span></a>
+                            </li>
+                            <li>
+                                <a href="users.html"><i class="zmdi zmdi-accounts"></i> <span>Manage Users</span></a>
+                            </li>
+                            <li>
+                                <a href="organization.html"><i class="zmdi zmdi-settings"></i> <span>Manage My Organization</span></a>
+                            </li>
+                        </ul>
+                        <!-- End navigation menu  -->
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End Navigation Bar-->
+
+        <div class="wrapper">
+            <div class="container">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="page-title">Your Profile</h4>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="card-box">
+                            <div class="user-box">
+                                <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465708663/Acada%2B%20Platform/User%20Images/avatar-1.jpg" th:src="${user.icon}" alt="user-img" class="img-circle user-img"/>
+                                <hr/>
+                                <h2><span th:text="${user.firstName}">Deji</span> <span th:text="${user.lastName}">Mabogunje</span></h2>
+                                <h4>
+                                    <span th:text="${user.role.description}">Teacher</span><br/>
+                                    <small th:text="${organizationName}">Corona Schools</small>
+                                </h4>
+                            </div>
+
+                            <table class="table m-t-30">
+                                <tr>
+                                    <td>Status</td>
+                                    <td>
+                                        <span class="badge badge-success" th:if="${user.status=='ENABLED'}">Active</span>
+                                        <span class="badge badge-danger" th:if="${user.status!='ENABLED'}">Inactive</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Joined</td>
+                                    <td th:text="${user.created}">3 Days Ago</td>
+                                </tr>
+                                <tr>
+                                    <td>Modified</td>
+                                    <td th:text="${user.modified}">3 Days Ago</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="card-box">
+
+                            <form class="form-horizontal" role="form" th:action="@{/profile}" th:object="${user}" method="POST">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h4 class="header-title m-t-0 m-b-30">About You</h4>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="first-name">First Name</label>
+                                            <div class="col-md-9">
+                                                <input id="first-name" type="text" class="form-control" placeholder="Enter your first name" th:field="*{firstName}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="middle-name">Middle Name</label>
+                                            <div class="col-md-9">
+                                                <input id="middle-name" type="text" class="form-control" placeholder="Enter your middle name" th:field="*{middleName}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="last-name">Last Name</label>
+                                            <div class="col-md-9">
+                                                <input id="last-name" type="text" class="form-control" placeholder="Enter your last name" th:field="*{lastName}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="email">Email</label>
+                                            <div class="col-md-9">
+                                                <input id="email" type="text" class="form-control" disabled="" th:field="*{email}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="gender">Gender</label>
+                                            <div class="col-md-9">
+                                                <select id="gender" class="form-control" th:field="*{gender}">
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group date">
+                                            <label class="col-md-3 control-label" for="dob">Date of Birth</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <input id="dob" type="text" class="form-control" placeholder="Please enter your date of birth" th:field="*{dob}" data-date-end-date="0d"/>
+                                                    <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-calendar"></i></span>
+                                                </div><!-- input-group -->
+                                            </div>
+                                        </div>
+                                        <h4 class="header-title m-t-30 m-b-30">Address</h4>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Street</label>
+                                            <div class="col-md-9">
+                                                <input id="street" type="text" class="form-control" placeholder="Street" th:field="*{street}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">City</label>
+                                            <div class="col-md-9">
+                                                <input id="city" type="text" class="form-control" placeholder="City" th:field="*{city}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">State</label>
+                                            <div class="col-md-9">
+                                                <input id="state" type="text" class="form-control" placeholder="State" th:field="*{state}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h4 class="header-title m-t-0 m-b-30">Social Media</h4>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="facebook">Facebook</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                                                <input id="facebook" type="text" class="form-control" placeholder="Facebook Url" th:field="*{facebook}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="twitter">Twitter</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                                                <input id="twitter" type="text" class="form-control" placeholder="Twitter Url" th:field="*{twitter}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="google">Google+</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-google-plus"></i></span>
+                                                <input id="google" type="text" class="form-control" placeholder="Google+ Url" th:field="*{google}"/>
+                                            </div>
+                                        </div>
+                                        <h4 class="header-title m-t-30 m-b-30">Contact Information</h4>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="land-line">Land Line</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                <input id="land-line" type="text" class="form-control" placeholder="Land Line Phone #" th:field="*{landline}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="mobile">Mobile</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
+                                                <input id="mobile" type="text" class="form-control" placeholder="Mobile Phone #" th:field="*{mobile}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="fax">Fax</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-fax"></i></span>
+                                                <input id="fax" type="text" class="form-control" placeholder="Fax Phone #" th:field="*{fax}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="website">Website</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-internet-explorer"></i></span>
+                                                <input id="website" type="text" class="form-control" placeholder="Website Address" th:field="*{website}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="skype">Skype</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                                                <input id="skype" type="text" class="form-control" placeholder="Skype Username" th:field="*{skype}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="whatsapp">WhatsApp</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-whatsapp"></i></span>
+                                                <input id="whatsapp" type="text" class="form-control" placeholder="WhatsApp #" th:field="*{whatsapp}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-center">
+                                        <input type="hidden" th:field="*{id}"/>
+                                        <button type="submit" class="btn btn-success btn-lg waves-effect waves-light"><i class="fa fa-save"></i> Save Changes</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Footer -->
+                <footer class="footer text-right" th:replace="fragments :: footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                2016 © Acada Plus
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End Footer -->
+
+            </div>
+            <!-- end container -->
+        </div>
+
+        <!-- jQuery  -->
+        <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+        <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+        <script src="../static/js/detect.js" th:src="@{/js/detect.js}"></script>
+        <script src="../static/js/fastclick.js" th:src="@{/js/fastclick.js}"></script>
+
+        <script src="../static/js/jquery.slimscroll.js" th:src="@{/js/jquery.slimscroll.js}"></script>
+        <script src="../static/js/jquery.blockUI.js" th:src="@{/js/jquery.blockUI.js}"></script>
+        <script src="../static/js/waves.js" th:src="@{/js/waves.js}"></script>
+        <script src="../static/js/wow.min.js" th:src="@{/js/wow.js}"></script>
+        <script src="../static/js/jquery.nicescroll.js" th:src="@{/js/jquery.nicescroll.js}"></script>
+        <script src="../static/js/jquery.scrollTo.min.js" th:src="@{/js/jquery.scrollTo.min.js}"></script>
+
+        <!-- Dashboard init -->
+
+        <!-- Bootstrap Date Picker -->
+        <script src="../static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" th:src="@{/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+
+        <!-- App js -->
+        <script src="../static/js/jquery.core.js" th:src="@{/js/jquery.core.js}"></script>
+        <script src="../static/js/jquery.app.js" th:src="@{/js/jquery.app.js}"></script>
+
+        <!-- Page js -->
+        <script src="../static/js/page-home.js" th:src="@{/js/page-home.js}"></script>
+
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('#dob').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+    </script>
+
+    </body>
+
+</html>

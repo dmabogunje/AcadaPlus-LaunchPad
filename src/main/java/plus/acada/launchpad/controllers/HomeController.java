@@ -22,7 +22,7 @@ class HomeController {
     private PermissionService permissionService;
 
     @RequestMapping("/")
-    String home(HttpServletRequest request, Model model) {
+    String loadHomePage(HttpServletRequest request, Model model) {
         Account account = AccountResolver.INSTANCE.getAccount(request);
         com.stormpath.sdk.application.Application currentApplication = ApplicationResolver.INSTANCE.getApplication(request);
         model.addAttribute("applications", applicationService.getMyApplications(account, currentApplication.getHref()));

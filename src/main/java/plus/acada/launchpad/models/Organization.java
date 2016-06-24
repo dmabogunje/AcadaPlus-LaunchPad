@@ -1,31 +1,26 @@
 package plus.acada.launchpad.models;
 
-public class User {
+public class Organization {
+
     private String id;
+    private String key;
     private String name;
-    private String firstName;
-    private String lastName;
-    private String middleName;
-    private String email;
-    private Role role;
-    private String gender;
-    private String status;
-    private String icon;
+    private String tagline;
+    private String description;
     private String facebook;
     private String twitter;
     private String google;
     private String landline;
     private String mobile;
     private String fax;
+    private String email;
     private String website;
     private String skype;
     private String whatsapp;
     private String street;
     private String city;
     private String state;
-    private String dob;
-    private String created;
-    private String modified;
+    private String locality;
 
     public String getId() {
         return id;
@@ -33,6 +28,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getName() {
@@ -43,60 +46,20 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getTagline() {
+        return tagline;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
     }
 
-    public Role getRole() {
-        return role;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFacebook() {
@@ -147,6 +110,14 @@ public class User {
         this.fax = fax;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getWebsite() {
         return website;
     }
@@ -195,35 +166,11 @@ public class User {
         this.state = state;
     }
 
-    public String getGender() {
-        return gender;
+    public String getLocality() {
+        return locality;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
-    public String getCreated() {
-        return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
-    }
-
-    public String getModified() {
-        return modified;
-    }
-
-    public void setModified(String modified) {
-        this.modified = modified;
+    public void setLocality(String locality) {
+        this.locality = locality;
     }
 }
