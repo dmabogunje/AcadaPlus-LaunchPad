@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import plus.acada.launchpad.models.Application;
 import plus.acada.launchpad.services.ApplicationService;
 import plus.acada.launchpad.services.PermissionService;
+import plus.acada.launchpad.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -23,6 +24,9 @@ public class ApplicationsController {
     @Autowired
     private PermissionService permissionService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("/applications")
     String loadApplicationsPage(HttpServletRequest request, Model model) {
 
@@ -32,6 +36,7 @@ public class ApplicationsController {
         model.addAttribute("applications", applications);
         model.addAttribute("rolePermissions", permissionService.getRolePermissions(account, applications));
         model.addAttribute("isSysAdmin", permissionService.isSysAdmin(account));
+        model.addAttribute("userProfileIcon", userService.convertAccount(account).getIcon());
         return "applications";
 
     }

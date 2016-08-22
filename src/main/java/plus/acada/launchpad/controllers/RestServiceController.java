@@ -1,20 +1,24 @@
 package plus.acada.launchpad.controllers;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
+import com.cloudinary.utils.ObjectUtils;
+import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.servlet.account.AccountResolver;
 import com.stormpath.sdk.servlet.client.ClientResolver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import plus.acada.launchpad.models.Permission;
 import plus.acada.launchpad.models.User;
 import plus.acada.launchpad.services.UserService;
 import plus.acada.launchpad.services.PermissionService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/rest")
@@ -54,5 +58,34 @@ public class RestServiceController {
     public @ResponseBody User updateUser(HttpServletRequest request, @RequestBody User user) {
         return userService.convertAccount(userService.updateAccount(ClientResolver.INSTANCE.getClient(request), user));
     }
+
+    @RequestMapping(value="/profile/image", method=RequestMethod.POST)
+    public @ResponseBody String updateUserIcon(HttpServletRequest request, @ModelAttribute MultipartFile file) throws Exception {
+
+        Account account = AccountResolver.INSTANCE.getAccount(request);
+
+        File icon = new File(file.getOriginalFilename());
+        boolean created = icon.createNewFile();
+        FileOutputStream fos = new FileOutputStream(icon);
+        fos.write(file.getBytes());
+        fos.close();
+
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "acadaplus",
+                "api_key", "761728957678469",
+                "api_secret", "bVRWtBpa-cPTtcsE1tzt_0Jgs8o"));
+        Map options = ObjectUtils.asMap(
+                "transformation", new Transformation().width(128).height(128).crop("fill"),
+                "public_id", "Acada+ Platform/User Images/"+account.getDirectory().getName()+"/"+account.getEmail());
+        Map result = cloudinary.uploader().upload(icon, options);
+
+        String url = (String) result.get("url");
+        userService.updateUserIcon(account, url);
+        return "{\"url\":\""+url+"\"}";
+
+    }
+
+
+
 
 }

@@ -108,7 +108,7 @@
                     "data": "name",
                     "className": "vertical-middle",
                     "render": function (data, type, row) {
-                        return '<img class="img-circle user-img" src="' + row.icon + '"/> ' + data;
+                        return '<img class="img-circle user-img" src="' + row.icon + '"/> <a href="/profile/' + row.id + '">' + data + '</a>';
                     }
                 },
                 {

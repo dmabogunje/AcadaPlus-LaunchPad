@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import plus.acada.launchpad.services.ApplicationService;
 import plus.acada.launchpad.services.PermissionService;
+import plus.acada.launchpad.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,12 +22,16 @@ class HomeController {
     @Autowired
     private PermissionService permissionService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("/")
     String loadHomePage(HttpServletRequest request, Model model) {
         Account account = AccountResolver.INSTANCE.getAccount(request);
         com.stormpath.sdk.application.Application currentApplication = ApplicationResolver.INSTANCE.getApplication(request);
         model.addAttribute("applications", applicationService.getMyApplications(account, currentApplication.getHref()));
         model.addAttribute("isSysAdmin", permissionService.isSysAdmin(account));
+        model.addAttribute("userProfileIcon", userService.convertAccount(account).getIcon());
         return "home";
     }
 }

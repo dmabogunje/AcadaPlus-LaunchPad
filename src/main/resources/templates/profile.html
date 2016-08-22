@@ -34,6 +34,36 @@
             var csrfToken = [[${_csrf.token}]];
         </script>
 
+        <style>
+            span.roll {
+                background:center center no-repeat #fff;
+                text-align: center;
+                position: absolute;
+                z-index: 10;
+                line-height: 20px;
+                width: 128px;
+                height: 128px;
+                opacity: .2;
+            }
+            .roll:before {
+                content: "\f030";
+                font-family: FontAwesome;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: inherit;
+                /*--adjust as necessary--*/
+                color: #000;
+                font-size: 16px;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .roll:hover {
+                cursor: pointer;
+                opacity: .7;
+            }
+        </style>
+
     </head>
 
     <body>
@@ -114,7 +144,8 @@
                     <div class="col-sm-3">
                         <div class="card-box">
                             <div class="user-box">
-                                <img src="http://res.cloudinary.com/acadaplus/image/upload/v1465708663/Acada%2B%20Platform/User%20Images/avatar-1.jpg" th:src="${user.icon}" alt="user-img" class="img-circle user-img"/>
+                                <span class="roll" id="profile-pic"></span>
+                                <img  id="profile-src" src="http://res.cloudinary.com/acadaplus/image/upload/v1465708663/Acada%2B%20Platform/User%20Images/avatar-1.jpg" th:src="${user.icon}" alt="user-img" class="img-circle user-img" width="128" height="128"/>
                                 <hr/>
                                 <h2><span th:text="${user.firstName}">Deji</span> <span th:text="${user.lastName}">Mabogunje</span></h2>
                                 <h4>
@@ -152,19 +183,19 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="first-name">First Name</label>
                                             <div class="col-md-9">
-                                                <input id="first-name" type="text" class="form-control" placeholder="Enter your first name" th:field="*{firstName}"/>
+                                                <input id="first-name" type="text" class="form-control" placeholder="Enter your first name" th:field="*{firstName}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="middle-name">Middle Name</label>
                                             <div class="col-md-9">
-                                                <input id="middle-name" type="text" class="form-control" placeholder="Enter your middle name" th:field="*{middleName}"/>
+                                                <input id="middle-name" type="text" class="form-control" placeholder="Enter your middle name" th:field="*{middleName}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="last-name">Last Name</label>
                                             <div class="col-md-9">
-                                                <input id="last-name" type="text" class="form-control" placeholder="Enter your last name" th:field="*{lastName}"/>
+                                                <input id="last-name" type="text" class="form-control" placeholder="Enter your last name" th:field="*{lastName}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -176,7 +207,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="gender">Gender</label>
                                             <div class="col-md-9">
-                                                <select id="gender" class="form-control" th:field="*{gender}">
+                                                <select id="gender" class="form-control" th:field="*{gender}" th:disabled="${userPreview}">
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
                                                 </select>
@@ -186,7 +217,7 @@
                                             <label class="col-md-3 control-label" for="dob">Date of Birth</label>
                                             <div class="col-md-9">
                                                 <div class="input-group">
-                                                    <input id="dob" type="text" class="form-control" placeholder="Please enter your date of birth" th:field="*{dob}" data-date-end-date="0d"/>
+                                                    <input id="dob" type="text" class="form-control" placeholder="Please enter your date of birth" th:field="*{dob}" data-date-end-date="0d" th:disabled="${userPreview}"/>
                                                     <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-calendar"></i></span>
                                                 </div><!-- input-group -->
                                             </div>
@@ -195,19 +226,19 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">Street</label>
                                             <div class="col-md-9">
-                                                <input id="street" type="text" class="form-control" placeholder="Street" th:field="*{street}"/>
+                                                <input id="street" type="text" class="form-control" placeholder="Street" th:field="*{street}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">City</label>
                                             <div class="col-md-9">
-                                                <input id="city" type="text" class="form-control" placeholder="City" th:field="*{city}"/>
+                                                <input id="city" type="text" class="form-control" placeholder="City" th:field="*{city}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">State</label>
                                             <div class="col-md-9">
-                                                <input id="state" type="text" class="form-control" placeholder="State" th:field="*{state}"/>
+                                                <input id="state" type="text" class="form-control" placeholder="State" th:field="*{state}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -217,21 +248,21 @@
                                             <label class="col-md-2 control-label" for="facebook">Facebook</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-                                                <input id="facebook" type="text" class="form-control" placeholder="Facebook Url" th:field="*{facebook}"/>
+                                                <input id="facebook" type="text" class="form-control" placeholder="Facebook Url" th:field="*{facebook}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label" for="twitter">Twitter</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-                                                <input id="twitter" type="text" class="form-control" placeholder="Twitter Url" th:field="*{twitter}"/>
+                                                <input id="twitter" type="text" class="form-control" placeholder="Twitter Url" th:field="*{twitter}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label" for="google">Google+</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-google-plus"></i></span>
-                                                <input id="google" type="text" class="form-control" placeholder="Google+ Url" th:field="*{google}"/>
+                                                <input id="google" type="text" class="form-control" placeholder="Google+ Url" th:field="*{google}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <h4 class="header-title m-t-30 m-b-30">Contact Information</h4>
@@ -239,42 +270,42 @@
                                             <label class="col-md-2 control-label" for="land-line">Land Line</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                                <input id="land-line" type="text" class="form-control" placeholder="Land Line Phone #" th:field="*{landline}"/>
+                                                <input id="land-line" type="text" class="form-control" placeholder="Land Line Phone #" th:field="*{landline}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label" for="mobile">Mobile</label>
                                             <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
-                                                <input id="mobile" type="text" class="form-control" placeholder="Mobile Phone #" th:field="*{mobile}"/>
+                                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                <input id="mobile" type="text" class="form-control" placeholder="Mobile Phone #" th:field="*{mobile}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label" for="fax">Fax</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-fax"></i></span>
-                                                <input id="fax" type="text" class="form-control" placeholder="Fax Phone #" th:field="*{fax}"/>
+                                                <input id="fax" type="text" class="form-control" placeholder="Fax Phone #" th:field="*{fax}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label" for="website">Website</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-internet-explorer"></i></span>
-                                                <input id="website" type="text" class="form-control" placeholder="Website Address" th:field="*{website}"/>
+                                                <input id="website" type="text" class="form-control" placeholder="Website Address" th:field="*{website}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label" for="skype">Skype</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-skype"></i></span>
-                                                <input id="skype" type="text" class="form-control" placeholder="Skype Username" th:field="*{skype}"/>
+                                                <input id="skype" type="text" class="form-control" placeholder="Skype Username" th:field="*{skype}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label" for="whatsapp">WhatsApp</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-whatsapp"></i></span>
-                                                <input id="whatsapp" type="text" class="form-control" placeholder="WhatsApp #" th:field="*{whatsapp}"/>
+                                                <input id="whatsapp" type="text" class="form-control" placeholder="WhatsApp #" th:field="*{whatsapp}" th:disabled="${userPreview}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +313,7 @@
                                 <div class="row">
                                     <div class="text-center">
                                         <input type="hidden" th:field="*{id}"/>
-                                        <button type="submit" class="btn btn-success btn-lg waves-effect waves-light"><i class="fa fa-save"></i> Save Changes</button>
+                                        <button type="submit" class="btn btn-success btn-lg waves-effect waves-light" th:disabled="${userPreview}"><i class="fa fa-save"></i> Save Changes</button>
                                     </div>
                                 </div>
                             </form>
@@ -317,13 +348,16 @@
         <script src="../static/js/jquery.slimscroll.js" th:src="@{/js/jquery.slimscroll.js}"></script>
         <script src="../static/js/jquery.blockUI.js" th:src="@{/js/jquery.blockUI.js}"></script>
         <script src="../static/js/waves.js" th:src="@{/js/waves.js}"></script>
-        <script src="../static/js/wow.min.js" th:src="@{/js/wow.js}"></script>
+        <script src="../static/js/wow.min.js" th:src="@{/js/wow.min.js}"></script>
         <script src="../static/js/jquery.nicescroll.js" th:src="@{/js/jquery.nicescroll.js}"></script>
         <script src="../static/js/jquery.scrollTo.min.js" th:src="@{/js/jquery.scrollTo.min.js}"></script>
 
         <!-- Dashboard init -->
 
         <!-- Bootstrap Date Picker -->
+        <script src="../static/js/dropzone.js" th:src="@{/js/dropzone.js}"></script>
+
+        <!-- Dropzone JS -->
         <script src="../static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" th:src="@{/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
 
         <!-- App js -->
@@ -333,11 +367,21 @@
         <!-- Page js -->
         <script src="../static/js/page-home.js" th:src="@{/js/page-home.js}"></script>
 
-    <script>
+    <script th:if="${!userPreview}">
         jQuery(document).ready(function() {
             jQuery('#dob').datepicker({
                 autoclose: true,
                 todayHighlight: true
+            });
+            $("#profile-pic").dropzone({
+                url: "/rest/profile/image",
+                headers: {'X-CSRF-TOKEN': csrfToken},
+                previewTemplate : '<div style="display:none"></div>',
+                init: function() {
+                    this.on("success", function(file, response) {
+                        $("#profile-src").attr("src", response.url);
+                    });
+                }
             });
         });
     </script>

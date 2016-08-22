@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import plus.acada.launchpad.models.Organization;
 import plus.acada.launchpad.services.OrganizationService;
 import plus.acada.launchpad.services.PermissionService;
+import plus.acada.launchpad.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,11 +25,15 @@ public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value="/organization", method= RequestMethod.GET)
     String loadOrganizationPage(HttpServletRequest request, Model model) {
         Account account = AccountResolver.INSTANCE.getAccount(request);
         model.addAttribute("organization", organizationService.getMyOrganization(account.getDirectory()));
         model.addAttribute("isSysAdmin", permissionService.isSysAdmin(account));
+        model.addAttribute("userProfileIcon", userService.convertAccount(account).getIcon());
         return "organization";
     }
 

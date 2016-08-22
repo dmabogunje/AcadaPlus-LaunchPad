@@ -8,6 +8,7 @@ import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.sdk.directory.Directory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Base64Utils;
 import plus.acada.launchpad.models.Role;
 import plus.acada.launchpad.models.User;
 
@@ -64,7 +65,7 @@ public class UserService {
     }
 
     public Account updateAccount(Client client, User user) {
-        Account account =  client.getResource(user.getId(), Account.class);
+        Account account =  client.getResource(decodeUserId(user.getId()), Account.class);
         setAccountRoleData(account, user);
         account.setGivenName(user.getFirstName());
         account.setSurname(user.getLastName());
@@ -74,7 +75,7 @@ public class UserService {
     }
 
     public Account updateAccountProfile(Client client, User user) {
-        Account account =  client.getResource(user.getId(), Account.class);
+        Account account =  client.getResource(decodeUserId(user.getId()), Account.class);
         account.setGivenName(user.getFirstName());
         account.setMiddleName(user.getMiddleName());
         account.setSurname(user.getLastName());
@@ -98,7 +99,7 @@ public class UserService {
 
     public User convertAccount(Account account) {
         User user = new User();
-        user.setId(account.getHref());
+        user.setId(encodeAccountHref(account.getHref()));
         user.setEmail(account.getEmail());
         user.setStatus(account.getStatus().name());
         user.setName(account.getFullName());
@@ -131,7 +132,7 @@ public class UserService {
     }
 
     public void deleteAccount(Client client, User user) {
-        Account account = client.getResource(user.getId(), Account.class);
+        Account account = client.getResource(decodeUserId(user.getId()), Account.class);
         account.delete();
     }
 
@@ -159,6 +160,11 @@ public class UserService {
         user.setIcon(icon);
     }
 
+    public void updateUserIcon(Account account, String icon) {
+        account.getCustomData().put(ICON_META_DATA, icon);
+        account.save();
+    }
+
     private String formatDate(Date date) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy");
@@ -167,6 +173,14 @@ public class UserService {
         catch (Exception e) {
             return "";
         }
+    }
+
+    public String decodeUserId(String userId) {
+        return new String(Base64Utils.decodeFromUrlSafeString(userId));
+    }
+
+    private String encodeAccountHref(String href) {
+        return Base64Utils.encodeToUrlSafeString(href.getBytes());
     }
 
 }
